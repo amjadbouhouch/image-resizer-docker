@@ -19,7 +19,7 @@ def resize_image():
         desired_height = int(desired_width / aspect_ratio)
 
         # Resize the image
-        resized_image = image.resize((desired_width, desired_height), Image.ANTIALIAS)
+        resized_image = image.resize((desired_width, desired_height), Image.Resampling.LANCZOS)
 
         # Save the resized image to a temporary file
         output = BytesIO()
