@@ -1,8 +1,9 @@
 FROM python:3.9-slim
 
-# Install system dependencies
+# Install system dependencies (include libwebp-dev for WebP support)
 RUN apt-get update && apt-get install -y \
     libjpeg-dev \
+    libwebp-dev \
     zlib1g-dev \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
