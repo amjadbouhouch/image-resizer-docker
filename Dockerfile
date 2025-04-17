@@ -1,21 +1,24 @@
 FROM python:3.9-slim
 
-# Install dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libjpeg-dev \
-    zlib1g-dev
+    zlib1g-dev \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
 # Install Python dependencies
-RUN pip install --no-cache-dir flask pillow requests
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the script file
+# Copy your application code
 COPY script.py .
 
-# Expose port 8111
+# Expose the port your app runs on
 EXPOSE 8111
 
-# Set the entrypoint command
-CMD ["python", "script.py"]
+# Run using Gunicorn for production
+CMD ["gunicorn", "--bind", "0.0.0.0:8111", "script:app"]

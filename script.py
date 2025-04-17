@@ -1,5 +1,5 @@
 import requests
-from PIL import Image
+from PIL import Image, ImageOps
 from io import BytesIO
 from flask import Flask, send_file, request
 
@@ -13,6 +13,7 @@ def resize_image():
     if image_url:
         response = requests.get(image_url)
         image = Image.open(BytesIO(response.content))
+        image = ImageOps.exif_transpose(image)  # Fix flipped/rotated images
 
         # Calculate the new height while maintaining the aspect ratio
         aspect_ratio = float(image.width) / image.height

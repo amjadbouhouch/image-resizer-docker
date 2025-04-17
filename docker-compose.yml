@@ -1,0 +1,11 @@
+services:
+  image-resizer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: image-resizer-container
+    ports:
+      - "8111:8111"
+    restart: unless-stopped
+    mem_limit: 256m
+    cpus: "0.5"
